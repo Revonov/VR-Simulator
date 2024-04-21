@@ -5,22 +5,35 @@ using UnityEngine;
 
 public class Attachment : MonoBehaviour
 {
-    [SerializeField] private GameObject obj1;   //Piston
-    [SerializeField] private GameObject obj2;   //Rod
-    [SerializeField] private GameObject obj3;
+    [SerializeField] private GameObject previous_step;   //First
+    [SerializeField] private GameObject detail;   //Rod
+    [SerializeField] private GameObject next_step;
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Rod")
+        if (collision.gameObject.name == detail.name)
         {
-           
-            Vector3 positions = obj1.transform.localPosition;
-            Quaternion rotation = obj1.transform.localRotation;
+            Vector3 positions = previous_step.transform.localPosition;
+            positions.y += 0.1f;
+            Quaternion rotation = previous_step.transform.localRotation;
 
+            Destroy(previous_step);
+            Destroy(detail);
 
-            Destroy(obj1);
-            Destroy(obj2);
-            Instantiate(obj3, positions, rotation);
-            obj3.transform.localScale = new Vector3(10000f, 10000f, 10000f);
+            /*if(next_step.transform.tag == "Bug")
+            {
+                rotation.x = previous_step.transform.localRotation.x - 0;
+                next_step.transform.localRotation = rotation;
+                Debug.Log("Yep");
+
+            }
+            else next_step.transform.localRotation = rotation; */
+
+            next_step.transform.localRotation = rotation;
+
+            next_step.transform.localPosition = positions;
+
+            next_step.transform.localScale = new Vector3(200f, 200f, 200f);
             
         }
     }
