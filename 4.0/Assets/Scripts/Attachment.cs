@@ -34,6 +34,8 @@ public class Attachment : MonoBehaviour
             next_step.transform.localPosition = positions;
 
             next_step.transform.localScale = new Vector3(200f, 200f, 200f);
+
+            next_step.GetComponent<Rigidbody>().isKinematic = false;
             
         }
     }
